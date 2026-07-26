@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { profileData } from "@/../content/profile";
 import { useLanguage } from "@/components/context/LanguageContext";
-import { Mail, Copy, Check, Send, MapPin, Linkedin, Github } from "lucide-react";
+import { Mail, Copy, Check, Send, MapPin, Linkedin, Github, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 
 export const ContactSection: React.FC = () => {
   const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(profileData.contact.email);
@@ -18,13 +17,50 @@ export const ContactSection: React.FC = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoLink = `mailto:${profileData.contact.email}?subject=Portfolio Contact from ${encodeURIComponent(
-      formData.name
-    )}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.email)}`;
-    window.location.href = mailtoLink;
-    setSubmitted(true);
+    setStatus("sending");
+
+    try {
+      const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+      // Fallback if access key is default placeholder
+      if (!accessKey || accessKey === "YOUR_WEB3FORMS_ACCESS_KEY") {
+        const mailtoLink = `mailto:${profileData.contact.email}?subject=Portfolio Contact from ${encodeURIComponent(
+          formData.name
+        )}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.email)}`;
+        window.location.href = mailtoLink;
+        setStatus("success");
+        return;
+      }
+
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          subject: `New Portfolio Message from ${formData.name}`,
+          from_name: "Portfolio Contact Form",
+        }),
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error("Form submission error:", err);
+      setStatus("error");
+    }
   };
 
   return (
@@ -160,22 +196,40 @@ export const ContactSection: React.FC = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full px-4 py-2.5 rounded-xl bg-stone-50 dark:bg-slate-800 border border-stone-200 dark:border-slate-700 text-sm text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 resize-none"
-                  placeholder="Hello Meliscan, I would like to connect regarding..."
+                  placeholder="Hello Melis, I would like to connect regarding..."
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-semibold text-sm shadow-md hover:opacity-90 transition duration-200"
+                disabled={status === "sending"}
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-semibold text-sm shadow-md hover:opacity-90 transition duration-200 disabled:opacity-50"
               >
-                <Send className="w-4 h-4" />
-                <span>{t.contact.formSubmit}</span>
+                {status === "sending" ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-indigo-400" />
+                    <span>{t.contact.formSending}</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>{t.contact.formSubmit}</span>
+                  </>
+                )}
               </button>
 
-              {submitted && (
-                <p className="text-xs text-emerald-600 dark:text-pastel-mint text-center font-medium">
-                  {t.contact.formSuccess}
-                </p>
+              {status === "success" && (
+                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-2 text-emerald-600 dark:text-pastel-mint text-xs font-medium">
+                  <CheckCircle2 className="w-4 h-4 shrink-0" />
+                  <span>{t.contact.formSuccess}</span>
+                </div>
+              )}
+
+              {status === "error" && (
+                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-2 text-rose-600 dark:text-rose-300 text-xs font-medium">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>An error occurred while sending your message. Please try again or use direct email.</span>
+                </div>
               )}
             </form>
           </div>
