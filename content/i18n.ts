@@ -11,6 +11,7 @@ export interface I18nDictionary {
     greeting: string;
     ctaProjects: string;
     ctaContact: string;
+    downloadCv: string;
   };
   about: {
     sectionTitle: string;
@@ -81,6 +82,7 @@ export const dictionaries: { en: I18nDictionary; tr: I18nDictionary } = {
       greeting: "Hi! I'm",
       ctaProjects: "Explore Featured Projects",
       ctaContact: "Get in Touch",
+      downloadCv: "Download CV",
     },
     about: {
       sectionTitle: "About Me",
@@ -149,6 +151,7 @@ export const dictionaries: { en: I18nDictionary; tr: I18nDictionary } = {
       greeting: "Merhaba, Ben",
       ctaProjects: "Projelerimi Keşfet",
       ctaContact: "İletişime Geç",
+      downloadCv: "CV İndir",
     },
     about: {
       sectionTitle: "Hakkımda",

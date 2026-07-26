@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { profileData } from "@/../content/profile";
 import { useLanguage } from "@/components/context/LanguageContext";
 import { Badge } from "@/components/ui/Badge";
-import { ArrowRight, Github, Linkedin, Mail, Cpu, Bot, Search } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Mail, Cpu, Bot, Search, FileText } from "lucide-react";
 
 export const HeroSection: React.FC = () => {
   const { language, t } = useLanguage();
@@ -89,6 +89,17 @@ export const HeroSection: React.FC = () => {
           >
             <Mail className="w-4 h-4 text-indigo-500" />
             <span>{t.hero.ctaContact}</span>
+          </a>
+
+          <a
+            href="/cv.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            download="Melis_Can_CV.pdf"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-emerald-50 dark:bg-slate-800/80 hover:bg-emerald-100 dark:hover:bg-slate-800 text-emerald-700 dark:text-pastel-mint border border-emerald-200 dark:border-slate-700 font-semibold text-sm shadow-sm backdrop-blur-md transition-all duration-300"
+          >
+            <FileText className="w-4 h-4 text-emerald-600 dark:text-pastel-mint" />
+            <span>{t.hero.downloadCv}</span>
           </a>
 
           {/* Social Quick Buttons */}
