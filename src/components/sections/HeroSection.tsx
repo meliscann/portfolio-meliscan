@@ -24,7 +24,7 @@ export const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[70vh] flex items-center justify-center pt-28 pb-12 px-4 sm:px-6 overflow-hidden">
+    <section className="relative min-h-[70vh] flex items-center justify-center pt-28 pb-24 px-4 sm:px-6 z-10">
       <div className="max-w-5xl mx-auto text-center space-y-8 z-10">
 
         {/* Main Name & Title (Hi! I'm Melis) */}
@@ -104,8 +104,8 @@ export const HeroSection: React.FC = () => {
             <span>{t.hero.ctaContact}</span>
           </a>
 
-          {/* Dual Language CV Download Button with Dropdown */}
-          <div className="relative w-full sm:w-auto" ref={cvMenuRef}>
+          {/* Dual Language CV Download Button with Unclipped Dropdown */}
+          <div className="relative w-full sm:w-auto z-30" ref={cvMenuRef}>
             <button
               onClick={() => setCvMenuOpen(!cvMenuOpen)}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-emerald-50 dark:bg-slate-800/80 hover:bg-emerald-100 dark:hover:bg-slate-800 text-emerald-700 dark:text-pastel-mint border border-emerald-200 dark:border-slate-700 font-semibold text-sm shadow-sm backdrop-blur-md transition-all duration-300"
@@ -116,7 +116,7 @@ export const HeroSection: React.FC = () => {
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${cvMenuOpen ? "rotate-180" : ""}`} />
             </button>
 
-            {/* Dropdown Menu */}
+            {/* Dropdown Menu (Full height, high z-index) */}
             <AnimatePresence>
               {cvMenuOpen && (
                 <motion.div
@@ -124,7 +124,7 @@ export const HeroSection: React.FC = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.95 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute left-0 right-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-48 z-30 rounded-2xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 shadow-xl p-1.5 backdrop-blur-xl"
+                  className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full mt-2 w-full sm:w-52 z-50 rounded-2xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 shadow-2xl p-2 backdrop-blur-xl space-y-1"
                 >
                   <a
                     href="/cv-en.pdf"
