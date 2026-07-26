@@ -22,17 +22,8 @@ export const ContactSection: React.FC = () => {
     setStatus("sending");
 
     try {
-      const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-
-      // Fallback if access key is default placeholder
-      if (!accessKey || accessKey === "YOUR_WEB3FORMS_ACCESS_KEY") {
-        const mailtoLink = `mailto:${profileData.contact.email}?subject=Portfolio Contact from ${encodeURIComponent(
-          formData.name
-        )}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.email)}`;
-        window.location.href = mailtoLink;
-        setStatus("success");
-        return;
-      }
+      // Public Web3Forms client access key
+      const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "07050683-8b79-4d6c-93a7-f051a82b9a0a";
 
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -55,6 +46,7 @@ export const ContactSection: React.FC = () => {
         setStatus("success");
         setFormData({ name: "", email: "", message: "" });
       } else {
+        console.error("Web3Forms error result:", result);
         setStatus("error");
       }
     } catch (err) {
@@ -228,7 +220,7 @@ export const ContactSection: React.FC = () => {
               {status === "error" && (
                 <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-2 text-rose-600 dark:text-rose-300 text-xs font-medium">
                   <AlertCircle className="w-4 h-4 shrink-0" />
-                  <span>An error occurred while sending your message. Please try again or use direct email.</span>
+                  <span>An error occurred while sending your message. Please try again.</span>
                 </div>
               )}
             </form>
