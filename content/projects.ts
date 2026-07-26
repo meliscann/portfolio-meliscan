@@ -36,6 +36,7 @@ export interface Project {
   githubUrl?: string;
   demoUrl?: string;
   iconName: string;
+  images?: string[]; // Optional array of image paths for modal carousel
 }
 
 export const projectsData: Project[] = [
@@ -93,6 +94,7 @@ export const projectsData: Project[] = [
     },
     githubUrl: "https://github.com/meliscann/FinAgent",
     iconName: "TrendingUp",
+    images: [],
   },
   {
     id: "buildingpath",
@@ -147,6 +149,7 @@ export const projectsData: Project[] = [
     },
     githubUrl: "https://github.com/meliscann/Indoor-Navigation-LLM",
     iconName: "Navigation",
+    images: [],
   },
   {
     id: "clinical-dss",
@@ -181,6 +184,7 @@ export const projectsData: Project[] = [
     },
     githubUrl: "https://github.com/meliscann/Clinical-Variant-XAI",
     iconName: "Activity",
+    images: [],
   },
   {
     id: "industrial-voice-assistant",
@@ -215,6 +219,7 @@ export const projectsData: Project[] = [
     },
     githubUrl: "https://github.com/meliscann/Industrial-Voice-RAG",
     iconName: "Mic",
+    images: [],
   },
   {
     id: "bluesense-ai",
@@ -249,6 +254,7 @@ export const projectsData: Project[] = [
     },
     githubUrl: "https://github.com/meliscann/Bluesense-Skin-CNN",
     iconName: "Eye",
+    images: [],
   },
   {
     id: "weak-password-xai",
@@ -283,6 +289,7 @@ export const projectsData: Project[] = [
     },
     githubUrl: "https://github.com/meliscann/Password-XAI-Research",
     iconName: "ShieldAlert",
+    images: [],
   },
   {
     id: "carbon",
@@ -317,6 +324,7 @@ export const projectsData: Project[] = [
     },
     githubUrl: "https://github.com/meliscann/CarbOn",
     iconName: "Leaf",
+    images: [],
   },
   {
     id: "kobi-pilot",
@@ -351,5 +359,6 @@ export const projectsData: Project[] = [
     },
     githubUrl: "https://github.com/meliscann/KOBI-Pilot",
     iconName: "Briefcase",
+    images: [],
   },
 ];
