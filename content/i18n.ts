@@ -96,7 +96,7 @@ export const dictionaries: { en: I18nDictionary; tr: I18nDictionary } = {
     },
     projects: {
       sectionTitle: "Featured Projects",
-      sectionSubtitle: "Selected works highlighting Multi-Agent orchestration, RAG pipelines, explainable models, and graph navigation.",
+      sectionSubtitle: "Some of the things I've been building. Mostly multi-agent systems, explainable AI models, and a few RAG pipelines along the way.",
       filterAll: "All Projects",
       filterMultiAgent: "Multi-Agent Systems",
       filterAiXai: "AI / ML & XAI",
@@ -165,7 +165,7 @@ export const dictionaries: { en: I18nDictionary; tr: I18nDictionary } = {
     },
     projects: {
       sectionTitle: "Öne Çıkan Projeler",
-      sectionSubtitle: "Çoklu ajan orkestrasyonu, RAG mimarileri, açıklanabilir modeller ve harita navigasyonunu içeren çalışmalarım.",
+      sectionSubtitle: "Geliştirdiğim projelerden bazıları. Ağırlıklı olarak çoklu ajan sistemleri, açıklanabilir yapay zeka modelleri ve RAG mimarileri.",
       filterAll: "Tüm Projeler",
       filterMultiAgent: "Çoklu Ajan Sistemleri",
       filterAiXai: "AI / ML & XAI",
