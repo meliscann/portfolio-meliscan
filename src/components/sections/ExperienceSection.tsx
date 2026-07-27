@@ -16,9 +16,6 @@ export const ExperienceSection: React.FC = () => {
       <div className="max-w-6xl mx-auto space-y-16">
         {/* Section Header */}
         <div className="text-center space-y-3">
-          <span className="font-mono text-xs uppercase tracking-widest text-emerald-600 dark:text-pastel-mint font-semibold">
-            // 02. Professional Track Record
-          </span>
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-stone-900 dark:text-white">
             {t.experience.sectionTitle}
           </h2>

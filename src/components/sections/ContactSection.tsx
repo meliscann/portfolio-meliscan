@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import { profileData } from "@/../content/profile";
 import { useLanguage } from "@/components/context/LanguageContext";
-import { Mail, Copy, Check, Send, MapPin, Linkedin, Github, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { Mail, Copy, Check, Send, Linkedin, Github, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 
 export const ContactSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -60,9 +60,6 @@ export const ContactSection: React.FC = () => {
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center space-y-3">
-          <span className="font-mono text-xs uppercase tracking-widest text-indigo-600 dark:text-pastel-lavender font-semibold">
-            // 05. Let's Connect
-          </span>
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-stone-900 dark:text-white">
             {t.contact.sectionTitle}
           </h2>
@@ -76,12 +73,11 @@ export const ContactSection: React.FC = () => {
           <div className="lg:col-span-5 space-y-6">
             <div className="p-6 sm:p-8 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-stone-200/80 dark:border-slate-800 backdrop-blur-md shadow-sm space-y-6">
               <div className="space-y-2">
-                <h3 className="font-heading font-bold text-xl text-stone-900 dark:text-white">
-                  Direct Communication
+                <h3 className="font-heading font-bold text-lg sm:text-xl text-stone-900 dark:text-white leading-snug">
+                  {language === "tr"
+                    ? "Benimle iletişime geçmek isterseniz e-posta göndermekten çekinmeyin! :)"
+                    : "If you would like to get in touch with me, feel free to send an email! :)"}
                 </h3>
-                <p className="text-xs text-stone-600 dark:text-slate-400">
-                  Feel free to send an email or connect via professional networks.
-                </p>
               </div>
 
               {/* Copyable Email Pill */}
@@ -109,12 +105,6 @@ export const ContactSection: React.FC = () => {
                     </>
                   )}
                 </button>
-              </div>
-
-              {/* Location Tag */}
-              <div className="flex items-center gap-2 text-xs text-stone-600 dark:text-slate-400 font-mono">
-                <MapPin className="w-4 h-4 text-rose-500" />
-                <span>{profileData.contact.location}</span>
               </div>
 
               {/* Social Channels */}

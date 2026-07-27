@@ -13,9 +13,6 @@ export const AboutSection: React.FC = () => {
     <section id="about" className="relative z-10 py-4 px-4 sm:px-6 max-w-5xl mx-auto space-y-10">
       {/* Section Header */}
       <div className="text-center space-y-2">
-        <span className="font-mono text-xs uppercase tracking-widest text-indigo-600 dark:text-pastel-lavender font-semibold">
-          // 01. Profile & Bio
-        </span>
         <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-stone-900 dark:text-white">
           {t.about.sectionTitle}
         </h2>

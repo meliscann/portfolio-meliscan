@@ -77,9 +77,6 @@ export const ProjectsSection: React.FC = () => {
       <div className="max-w-6xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center space-y-3">
-          <span className="font-mono text-xs uppercase tracking-widest text-indigo-600 dark:text-pastel-lavender font-semibold">
-            // 03. Portfolio Showcase
-          </span>
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-stone-900 dark:text-white">
             {t.projects.sectionTitle}
           </h2>
