@@ -6,23 +6,13 @@ import { projectsData, Project } from "@/../content/projects";
 import { useLanguage } from "@/components/context/LanguageContext";
 import { Badge } from "@/components/ui/Badge";
 import {
-  TrendingUp,
-  Navigation,
-  Activity,
-  Mic,
-  Eye,
-  ShieldAlert,
-  Leaf,
-  Briefcase,
   Github,
   ExternalLink,
   ChevronRight,
   X,
   Layers,
   BarChart3,
-  Bot,
   ChevronLeft,
-  Image as ImageIcon,
 } from "lucide-react";
 
 export const ProjectsSection: React.FC = () => {
@@ -43,29 +33,6 @@ export const ProjectsSection: React.FC = () => {
     activeFilter === "All"
       ? projectsData
       : projectsData.filter((p) => p.category === activeFilter);
-
-  const getIcon = (iconName: string) => {
-    switch (iconName) {
-      case "TrendingUp":
-        return <TrendingUp className="w-5 h-5 text-indigo-500" />;
-      case "Navigation":
-        return <Navigation className="w-5 h-5 text-amber-500" />;
-      case "Activity":
-        return <Activity className="w-5 h-5 text-emerald-500" />;
-      case "Mic":
-        return <Mic className="w-5 h-5 text-sky-500" />;
-      case "Eye":
-        return <Eye className="w-5 h-5 text-purple-500" />;
-      case "ShieldAlert":
-        return <ShieldAlert className="w-5 h-5 text-rose-500" />;
-      case "Leaf":
-        return <Leaf className="w-5 h-5 text-emerald-500" />;
-      case "Briefcase":
-        return <Briefcase className="w-5 h-5 text-sky-500" />;
-      default:
-        return <Bot className="w-5 h-5 text-indigo-500" />;
-    }
-  };
 
   const handleOpenModal = (project: Project) => {
     setSelectedProject(project);
@@ -117,11 +84,8 @@ export const ProjectsSection: React.FC = () => {
                 className="group relative flex flex-col justify-between p-6 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-stone-200/80 dark:border-slate-800 backdrop-blur-md shadow-sm hover:shadow-pastel-glow transition-all duration-300"
               >
                 <div className="space-y-4">
-                  {/* Top Header Row */}
+                  {/* Top Header Row with Status Badge */}
                   <div className="flex items-center justify-between gap-2">
-                    <div className="p-2.5 rounded-xl bg-stone-100 dark:bg-slate-800 border border-stone-200/60 dark:border-slate-700/60">
-                      {getIcon(project.iconName)}
-                    </div>
                     <Badge variant={project.badgeColor} size="sm">
                       {project.status[language]}
                     </Badge>
