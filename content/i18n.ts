@@ -32,6 +32,7 @@ export interface I18nDictionary {
     filterVisionAudio: string;
     filterSystemsHacks: string;
     viewDetails: string;
+    watchDemo: string;
     githubLink: string;
     demoLink: string;
     modalTitle: string;
@@ -102,7 +103,8 @@ export const dictionaries: { en: I18nDictionary; tr: I18nDictionary } = {
       filterAiXai: "AI / ML & XAI",
       filterVisionAudio: "Vision & Audio",
       filterSystemsHacks: "Systems & Hacks",
-      viewDetails: "View Details & Architecture",
+      viewDetails: "View Details, Architecture & Demo",
+      watchDemo: "Watch Demo",
       githubLink: "Source Code",
       demoLink: "Live Demo",
       modalTitle: "Project Technical Overview",
@@ -171,7 +173,8 @@ export const dictionaries: { en: I18nDictionary; tr: I18nDictionary } = {
       filterAiXai: "AI / ML & XAI",
       filterVisionAudio: "Görü & Ses",
       filterSystemsHacks: "Sistemler & Hackathon",
-      viewDetails: "Detayları ve Mimariyi Gör",
+      viewDetails: "Detayları, Mimariyi ve Demo'yu Gör",
+      watchDemo: "Demo'yu İncele",
       githubLink: "Kaynak Kodu",
       demoLink: "Canlı Demo",
       modalTitle: "Proje Teknik İncelemesi",

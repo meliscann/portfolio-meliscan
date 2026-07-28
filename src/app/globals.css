@@ -72,3 +72,13 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(150, 150, 180, 0.6);
 }
+
+/* Hide Header and Footer when modal is open */
+body.modal-open header,
+body.modal-open footer {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+

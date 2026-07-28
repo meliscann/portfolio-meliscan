@@ -36,10 +36,149 @@ export interface Project {
   githubUrl?: string;
   demoUrl?: string;
   iconName: string;
-  images?: string[]; // Optional array of image paths for modal carousel
+  images?: string[]; // Optional array of image paths for gallery carousel
+  posterImageUrl?: string; // Optional poster image path
+  videoUrl?: string; // Optional video path (.mp4) or video URL
+  posterPdfUrl?: string; // Optional PDF poster path
 }
 
 export const projectsData: Project[] = [
+  {
+    id: "buildingpath",
+    slug: "buildingpath-indoor-navigation",
+    title: {
+      en: "BuildingPath: AI-Powered Multi-Floor Indoor Navigation",
+      tr: "BuildingPath: Yapay Zeka Destekli Çok Katlı İç Mekan Navigasyonu",
+    },
+    shortDescription: {
+      en: `BuildingPath is an indoor navigation system I built for a 6-floor, 160+ room research building where GPS doesn't work and floor plans aren't machine-readable.
+
+Background: Users are unable to access GPS signals inside the building and typically describe destinations in words, not coordinates.
+Goal: Let users type a destination in plain English or Turkish and get an optimal, real-world-calibrated route across floors.
+Tools: Python for 7 benchmarked pathfinding algorithms, a custom cost model based on real walking speed and physical exertion data, and an LLM (via Groq) for natural language understanding, kept deliberately separate from all routing decisions for reliability.
+Insights: A* cut search time by up to 3.8x over baseline while guaranteeing optimal routes; the accessibility profile system produced sensible stairs vs. elevator routing with zero hardcoded rules.
+Through this project, I learned how to distinguish between the components of AI systems that should be delegated to language models and those that must remain deterministic.`,
+      tr: `BuildingPath, GPS'in çalışmadığı ve kat planlarının makine tarafından okunamadığı, 6 katlı ve 160'tan fazla odalı bir araştırma binası için geliştirdiğim bir bina içi navigasyon sistemi.
+
+Arka Plan: Kullanıcılar, bina içinde GPS'e erişemiyorlar ve hedeflerini genellikle koordinat değil, kelimelerle tarif ediyorlar.
+Amaç: Kullanıcının hedefini İngilizce veya Türkçe yazmasıyla katlar arası optimal, gerçek dünya verilerine göre kalibre edilmiş bir rota sunmak.
+Araçlar: Birbirine karşı test ettiğim 7 farklı yol bulma algoritması için Python, gerçek yürüme hızı ve fiziksel efor verilerine dayanan özel bir maliyet modeli, ve doğal dil anlama için (Groq üzerinden) bir LLM. LLM'i güvenilirlik için tüm rota kararlarından bilinçli olarak ayrı tuttum.
+Bulgular: A*, optimal rotayı garanti ederken arama süresini temel yönteme göre 3,8 kata kadar kısalttı. Erişilebilirlik profil sistemi ise sıfır sabit kodlanmış kuralla mantıklı merdiven-asansör seçimleri yaptı.
+Bu çalışmam sayesinde yapay zeka projelerinde, problemin dil modeline bırakılacak kısımları ile deterministik tutulması gereken kısımlarının ayrımını yapmayı öğrendim.`,
+    },
+    fullDescription: {
+      en: `Introduction
+Outdoor navigation has been solved by GPS, but indoors it's still an open problem: no reliable positioning, no machine-readable floor plans, and people describe destinations in words, not coordinates ("Prof. Whitfield's office," not "x:141, y:11"). I built BuildingPath to solve this for a real, complex building: a 6-floor, 160+ room research facility.
+
+The goal was to:
+• Answer natural-language destination queries
+• Compute genuinely optimal routes across floors, not just "shortest path" but fastest in real time
+• Explain the route back to the user in plain language
+• Keep the system reliable even if the AI component goes down
+
+Process
+Key steps in building the system:
+• Converted architectural floor plans into a 230×128 grid per floor (65,000+ walkable cells)
+• Built a resolver that matches free-text queries against 168 named locations and 31 space categories using a 3-tier strategy: exact match, then labeled-entity match, then token-overlap scoring, supporting both English and Turkish
+• Implemented and benchmarked 7 pathfinding algorithms (A*, Weighted A*, Theta*, Bidirectional A*, IDA*, UCS, BFS)
+• Calibrated a cost model to real walking speed and physical exertion (MET values for stairs vs. elevators), so the system finds the route that matches how a real person would want to move, including a "fastest" vs. "minimum effort" (accessibility-aware) profile
+• Integrated an LLM (LLaMA-3.3-70B via Groq) to handle the fuzzy part: interpreting queries, resolving pronouns across a conversation, and narrating routes in natural language, but never making routing decisions itself, so the app keeps working even if the API call fails
+• Wrapped everything in a Flask backend and a vanilla JS single-page frontend with live floor-plan visualization
+
+Results
+• A* cut node expansion by up to 3.8x vs. brute-force search while still guaranteeing the optimal route
+• A speed-optimized variant (Weighted A*) delivered up to 6.8x faster computation for a max 4.1% cost tradeoff
+• The two user profiles produced genuinely different, sensible routes (stairs vs. elevator) for the same start/end point, purely from the cost model, with no hardcoded "if minimum effort, avoid stairs" logic anywhere
+
+Insights
+The biggest lesson was architectural: keeping the LLM strictly out of the decision-making path (routing, cost calculation) and confined to language understanding made the system dramatically more reliable and debuggable than an end-to-end "ask the LLM to find the path" approach, which, per related research I reviewed, is both slower and less accurate. Good product design here meant knowing which problems AI should solve and which it shouldn't.
+
+Learnings
+• Structured-output prompt engineering (forcing reliable JSON from an LLM)
+• Designing admissible heuristics for guaranteed-optimal search
+• Calibrating abstract cost functions against real-world physical constants
+• Building a resilient system with graceful degradation when an external API is unavailable`,
+
+      tr: `Giriş
+Açık alanda navigasyon GPS ile çözülmüş bir problem, ama bina içinde durum farklı: konum sinyali güvenilir değil, kat planları makine tarafından okunabilir formatta değil, ve insanlar hedeflerini koordinat değil, kelimelerle tarif ediyor ("Prof. Whitfield'ın ofisi" gibi). Bu projede, 6 katlı ve 160'tan fazla odası olan gerçek bir araştırma binası için bu problemi çözdüm.
+
+Amaçlarım:
+• Doğal dilde yazılan hedef sorgularını anlamak
+• Katlar arası gerçekten optimal, sadece en kısa değil, gerçek zamanda en hızlı rotayı hesaplamak
+• Rotayı kullanıcıya anlaşılır bir dille geri anlatmak
+• Yapay zeka bileşeni çökse bile sistemi çalışır tutmak
+
+Süreç
+Sistemi kurarken izlediğim adımlar:
+• Mimari kat planlarını her kat için 230×128'lik bir grid'e (65.000+ yürünebilir hücre) dönüştürdüm
+• 168 isimlendirilmiş konum ve 31 mekân kategorisi üzerinde, hem İngilizce hem Türkçe destekleyen 3 aşamalı bir eşleştirme stratejisiyle (tam eşleşme, ardından etiketli varlık eşleşmesi, ardından kelime örtüşme skorlaması) çalışan bir sorgu çözücü kurdum
+• 7 farklı yol bulma algoritması (A*, Weighted A*, Theta*, Bidirectional A*, IDA*, UCS, BFS) uyguladım ve karşılaştırdım
+• Maliyet modelini gerçek yürüme hızına ve fiziksel efor verilerine (merdiven/asansör için MET değerleri) göre kalibre ettim, böylece sistem gerçek bir insanın tercih edeceği rotayı buluyor ("en hızlı" ve erişilebilirlik odaklı "en az efor" profilleri dahil)
+• Belirsiz kısmı halletmesi için bir LLM (Groq üzerinden LLaMA-3.3-70B) entegre ettim: sorguları yorumluyor, konuşma boyunca zamir çözümlemesi yapıyor, rotayı doğal dilde anlatıyor, ama hiçbir rota kararı vermiyor, bu sayede API çağrısı başarısız olsa bile uygulama çalışmaya devam ediyor
+• Sistemi Flask backend ve canlı kat planı görselleştirmesi olan vanilla JS bir SPA ile bütünleştirdim
+
+Sonuçlar
+• A*, kaba kuvvet aramaya kıyasla düğüm genişletmesini optimal rotayı garanti ederken 3,8 kata kadar azalttı
+• Hız odaklı bir varyant (Weighted A*), maksimum %4,1 maliyet artışı karşılığında hesaplamayı 6,8 kata kadar hızlandırdı
+• İki kullanıcı profili, aynı başlangıç/bitiş noktası için maliyet modelinden tamamen doğal şekilde farklı ve mantıklı rotalar (merdiven vs. asansör) üretti, hiçbir yerde sabit kodlanmış bir kural olmadan
+
+Çıkarımlar
+En büyük ders mimariyle ilgiliydi. LLM'i karar verme sürecinden (rota belirleme, maliyet hesaplama) tamamen uzak tutup sadece dil anlama görevine hapsetmek, sistemi "LLM'e haritadan yol buldur" yaklaşımına göre çok daha güvenilir ve hata ayıklanabilir hale getirdi. İncelediğim ilgili araştırmalara göre bu yaklaşım hem daha yavaş hem de daha az doğru. İyi ürün tasarımı burada, yapay zekanın hangi problemleri çözmesi, hangilerini çözmemesi gerektiğini bilmekti.
+
+Öğrenimler
+• LLM'den güvenilir JSON çıktısı almak için prompt mühendisliği
+• Garantili optimal arama için admissible heuristic tasarımı
+• Soyut maliyet fonksiyonlarını gerçek dünya fiziksel sabitlerine göre kalibre etmek
+• Dış API kullanılamadığında zarifçe geri düşen (graceful degradation), dayanıklı sistem tasarımı`,
+    },
+    category: "AI/ML & XAI",
+    status: {
+      en: "01/2026 – 05/2026 (Graduation Project)",
+      tr: "01/2026 – 05/2026 (Bitirme Projesi)",
+    },
+    badgeColor: "peach",
+    featured: true,
+    role: {
+      en: "Sole Developer & Researcher",
+      tr: "Tekil Geliştirici & Araştırmacı",
+    },
+    technologies: [
+      "Python",
+      "Flask",
+      "LLaMA-3.3-70B (Groq API)",
+      "Pillow / ImageDraw",
+      "Vanilla JS SPA",
+      "REST API",
+    ],
+    metrics: {
+      en: [
+        "3.8× fewer node expansions (A* vs. UCS/Dijkstra), always optimal",
+        "6.8× fewer expansions with Weighted A*, under 4.1% cost tradeoff",
+        "168 POIs · 31 space types · 125+ bilingual aliases, tested on a real 6-floor building",
+      ],
+      tr: [
+        "A*, UCS/Dijkstra'ya göre düğüm genişletmesini 3.8 kat azaltıyor, her zaman optimal",
+        "Weighted A* ile %4.1'in altında maliyet artışıyla 6.8 kat daha az genişletme",
+        "168 POI · 31 mekan tipi · 125+ iki dilli takma ad, gerçek 6 katlı binada test edildi",
+      ],
+    },
+    agentArchitecture: {
+      en: [
+        "LLM Layer (LLaMA-3.3-70B): query parsing (text → {destination, profile, floor, language}), pronoun resolution, route narration, and explore-mode chat — with rule-based fallback if the API fails.",
+        "Deterministic Layer: 3-tier POI resolver, A*-family pathfinding engine, and Pillow-based map renderer — the LLM never sees or influences these.",
+        "Cost Model: time-calibrated stair/elevator costs (0.32m/cell, 1.4m/s walking speed) drive an emergent 'fastest vs. minimum-effort' profile system with no hardcoded routing rules.",
+      ],
+      tr: [
+        "LLM Katmanı (LLaMA-3.3-70B): sorgu ayrıştırma (metin → {hedef, profil, kat, dil}), zamir çözümü, rota anlatımı ve keşif modu sohbeti — API başarısız olursa kural tabanlı yedeğe geçiyor.",
+        "Deterministik Katman: 3 katmanlı POI çözücü, A* ailesi yol bulma motoru ve Pillow tabanlı harita çizici — LLM bunları asla görmüyor veya etkilemiyor.",
+        "Maliyet Modeli: zaman kalibreli merdiven/asansör maliyetleri (0.32m/hücre, 1.4m/s yürüme hızı), hardcoded rota kuralı olmadan 'en hızlı vs. en az efor' profil sistemini ortaya çıkarıyor.",
+      ],
+    },
+    githubUrl: "https://github.com/meliscann/building-path",
+    iconName: "Navigation",
+    images: [],
+    videoUrl: "/projects/buildingpath-demo.mp4",
+  },
   {
     id: "finagent",
     slug: "finagent-investment-advisor",
@@ -95,71 +234,6 @@ export const projectsData: Project[] = [
     //githubUrl: "https://github.com/meliscann/FinAgent",
     iconName: "TrendingUp",
     images: [],
-  },
-  {
-    id: "buildingpath",
-    slug: "buildingpath-indoor-navigation",
-    title: {
-      en: "Multi-Floor Indoor Navigation with Semantic Search & LLM Integration (Graduation Project)",
-      tr: "Semantik Arama ve LLM Entegrasyonlu Çok Katlı İç Mekan Navigasyonu (Bitirme Projesi)",
-    },
-    shortDescription: {
-      en: "A fully working navigation system tested on a real 6-floor, 65k-cell building. Benchmarked 7 pathfinding algorithms head-to-head — A* cuts node expansions by up to 3.8x over Dijkstra, and a hybrid LLM + deterministic architecture resolves natural language queries in Turkish and English without ever letting the LLM touch the actual routing math.",
-      tr: "Gerçek bir 6 katlı, 65 bin hücrelik binada uçtan uca çalışan bir navigasyon sistemi. 7 yol bulma algoritması birebir karşılaştırıldı — A*, Dijkstra'ya göre düğüm genişletmesini 3.8 kata kadar azaltıyor. Hibrit LLM + deterministik mimari, Türkçe/İngilizce doğal dil sorgularını çözerken rota hesaplamasının tamamını LLM'den bağımsız tutuyor.",
-    },
-    fullDescription: {
-      en: "B.Sc. Graduation Project (01/2026 – 05/2026), supervised by Prof. Dr. Mehmet Raşit Eskicioğlu. Indoor GPS doesn't exist — this project solves the three problems that come with that: no reliable positioning, natural language destinations that don't map to coordinates ('Prof. Whitfield's office'), and multi-floor routing that has to reason about stairs vs. elevators, not just 2D distance.\n\nThe core is a 65,467-cell walkable grid across 6 real floors (230×128 per floor, 0.32m/cell), benchmarked against 7 pathfinding algorithms — BFS, UCS, A*, Weighted A*, Theta*, IDA*, and Bidirectional A* — all built on shared state-space infrastructure. A custom multi-floor admissible heuristic (Euclidean in-floor, extended with the minimum elevator cost for cross-floor estimates) guarantees A* always finds the optimal route while cutting explored nodes by up to 3.8x versus Dijkstra's UCS baseline, and up to 6.8x with Weighted A* at under 4.1% cost tradeoff.\n\nA 3-tier POI resolver (exact alias → labeled instance match → token overlap scoring) maps free-form queries against 168 named POIs, 31 space types, and 125+ bilingual aliases. On top of that sits a hybrid LLM layer (LLaMA-3.3-70B via Groq, temperature 0.1): the model handles language understanding, pronoun resolution across turns, and route narration — but it never touches coordinate lookup, pathfinding, or cost calculation, and falls back to a deterministic resolver if the API is unreachable. A time-calibrated cost model (elevator boarding ≈25s, stair climb ≈22s/floor) also powers a profile system — 'fastest route' vs. 'minimum effort' — where routing behavior emerges purely from MET-based cost multipliers, with zero hardcoded if/else routing logic.",
-      tr: "Lisans Bitirme Projesi (01/2026 – 05/2026), Danışman: Prof. Dr. Mehmet Raşit Eskicioğlu. Kapalı alanlarda GPS çalışmıyor — bu proje bundan doğan üç problemi çözüyor: güvenilir konumlandırma yokluğu, koordinata dönüşmeyen doğal dil hedefleri ('Prof. Whitfield'ın ofisi') ve sadece 2D mesafeyi değil merdiven/asansör tercihini de hesaba katması gereken çok katlı rotalama.\n\nSistemin çekirdeği, 6 gerçek katta 65.467 hücrelik yürünebilir bir ızgara (kat başına 230×128, hücre başına 0.32m) ve bu ızgara üzerinde birebir karşılaştırılan 7 algoritma: BFS, UCS, A*, Weighted A*, Theta*, IDA* ve Bidirectional A*. Özel bir çok katlı kabul edilebilir (admissible) sezgisel fonksiyon — kat içinde Öklid mesafesi, katlar arası geçişte minimum asansör maliyetiyle genişletilmiş — A*'ın her zaman optimal rotayı bulmasını garanti ederken, Dijkstra (UCS) tabanlı karşılaştırmaya göre genişletilen düğüm sayısını 3.8 kata, Weighted A* ile ise %4.1'in altında maliyet artışıyla 6.8 kata kadar azaltıyor.\n\n3 katmanlı bir POI çözücü (tam alias eşleşmesi → etiketli örnek eşleşmesi → token örtüşme skorlaması) serbest metin sorgularını 168 adlandırılmış POI, 31 mekan tipi ve 125+ iki dilli takma ad üzerinden çözüyor. Bunun üzerinde hibrit bir LLM katmanı (Groq üzerinden LLaMA-3.3-70B, sıcaklık 0.1) çalışıyor: model dil anlama, konuşma turları arası zamir çözümü ve rota anlatımını üstleniyor — ama koordinat arama, yol bulma veya maliyet hesaplamasına asla dokunmuyor; API erişilemez olursa deterministik çözücüye otomatik geçiyor. Zaman kalibreli bir maliyet modeli (asansöre binme ≈25sn, merdiven çıkışı ≈22sn/kat) aynı zamanda bir profil sistemini besliyor — 'en hızlı rota' ile 'en az efor' — burada rotalama davranışı tamamen MET tabanlı maliyet çarpanlarından ortaya çıkıyor, sıfır hardcoded if/else mantığı ile.",
-    },
-    category: "AI/ML & XAI",
-    status: {
-      en: "01/2026 – 05/2026 (Graduation Project)",
-      tr: "01/2026 – 05/2026 (Bitirme Projesi)",
-    },
-    badgeColor: "peach",
-    featured: true,
-    role: {
-      en: "Sole Developer & Researcher",
-      tr: "Tekil Geliştirici & Araştırmacı",
-    },
-    technologies: [
-      "Python",
-      "Flask",
-      "LLaMA-3.3-70B (Groq API)",
-      "A* / Theta* / IDA* / Bidirectional A*",
-      "Admissible Heuristic Design",
-      "Pillow / ImageDraw",
-      "Vanilla JS SPA",
-      "REST API",
-    ],
-    metrics: {
-      en: [
-        "3.8× fewer node expansions (A* vs. UCS/Dijkstra), always optimal",
-        "6.8× fewer expansions with Weighted A*, under 4.1% cost tradeoff",
-        "168 POIs · 31 space types · 125+ bilingual aliases, tested on a real 6-floor building",
-      ],
-      tr: [
-        "A*, UCS/Dijkstra'ya göre düğüm genişletmesini 3.8 kat azaltıyor, her zaman optimal",
-        "Weighted A* ile %4.1'in altında maliyet artışıyla 6.8 kat daha az genişletme",
-        "168 POI · 31 mekan tipi · 125+ iki dilli takma ad, gerçek 6 katlı binada test edildi",
-      ],
-    },
-    agentArchitecture: {
-      en: [
-        "LLM Layer (LLaMA-3.3-70B): query parsing (text → {destination, profile, floor, language}), pronoun resolution, route narration, and explore-mode chat — with rule-based fallback if the API fails.",
-        "Deterministic Layer: 3-tier POI resolver, A*-family pathfinding engine, and Pillow-based map renderer — the LLM never sees or influences these.",
-        "Cost Model: time-calibrated stair/elevator costs (0.32m/cell, 1.4m/s walking speed) drive an emergent 'fastest vs. minimum-effort' profile system with no hardcoded routing rules.",
-      ],
-      tr: [
-        "LLM Katmanı (LLaMA-3.3-70B): sorgu ayrıştırma (metin → {hedef, profil, kat, dil}), zamir çözümü, rota anlatımı ve keşif modu sohbeti — API başarısız olursa kural tabanlı yedeğe geçiyor.",
-        "Deterministik Katman: 3 katmanlı POI çözücü, A* ailesi yol bulma motoru ve Pillow tabanlı harita çizici — LLM bunları asla görmüyor veya etkilemiyor.",
-        "Maliyet Modeli: zaman kalibreli merdiven/asansör maliyetleri (0.32m/hücre, 1.4m/s yürüme hızı), hardcoded rota kuralı olmadan 'en hızlı vs. en az efor' profil sistemini ortaya çıkarıyor.",
-      ],
-    },
-    githubUrl: "https://github.com/meliscann/building-path",
-    iconName: "Navigation",
-    images: [],
-    // TODO: add screen recording — see note below
   },
   {
     id: "clinical-dss",
@@ -299,7 +373,14 @@ export const projectsData: Project[] = [
     },
     //githubUrl: "https://github.com/meliscann/Password-XAI-Research",
     iconName: "ShieldAlert",
-    images: [],
+    posterImageUrl: "/projects/MelisCan-Workshop-Poster.png",
+    posterPdfUrl: "/projects/MelisCan-Workshop-Poster.pdf",
+    images: [
+      "/projects/1.jpg",
+      "/projects/2.jpg",
+      "/projects/3.jpg",
+      "/projects/4.jpg",
+    ],
   },
   {
     id: "carbon",

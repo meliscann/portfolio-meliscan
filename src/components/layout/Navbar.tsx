@@ -38,9 +38,12 @@ export const Navbar: React.FC = () => {
           : "bg-transparent py-5"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-        {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-1.5 rounded-full px-4 py-1.5 bg-stone-100/80 dark:bg-slate-800/80 border border-stone-200/80 dark:border-slate-700/80 backdrop-blur-md">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-10">
+        {/* Empty left spacer */}
+        <div className="hidden md:block w-24 shrink-0" />
+
+        {/* Desktop Nav Links Pill - Exactly Centered */}
+        <nav className="hidden md:flex items-center gap-1.5 rounded-full px-4 py-1.5 bg-stone-100/80 dark:bg-slate-800/80 border border-stone-200/80 dark:border-slate-700/80 backdrop-blur-md absolute left-1/2 -translate-x-1/2 shadow-sm">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -59,12 +62,12 @@ export const Navbar: React.FC = () => {
           })}
         </nav>
 
-        {/* Action Controls: Language Switcher + Theme Toggle */}
-        <div className="hidden md:flex items-center gap-3 ml-auto">
+        {/* Action Controls: Language Switcher + Theme Toggle - Positioned Further Right */}
+        <div className="hidden md:flex items-center gap-3.5 ml-auto">
           {/* Language Switcher */}
           <button
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold bg-stone-100 dark:bg-slate-800 text-stone-800 dark:text-slate-200 border border-stone-200 dark:border-slate-700 hover:border-pastel-lavender transition"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold bg-stone-100 dark:bg-slate-800 text-stone-800 dark:text-slate-200 border border-stone-200 dark:border-slate-700 hover:border-pastel-lavender transition shadow-sm"
             aria-label="Toggle language"
           >
             <Globe className="w-3.5 h-3.5 text-indigo-500" />
@@ -80,7 +83,7 @@ export const Navbar: React.FC = () => {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-full bg-stone-100 dark:bg-slate-800 text-stone-700 dark:text-slate-200 border border-stone-200 dark:border-slate-700 hover:scale-105 transition"
+            className="p-2 rounded-full bg-stone-100 dark:bg-slate-800 text-stone-700 dark:text-slate-200 border border-stone-200 dark:border-slate-700 hover:scale-105 transition shadow-sm"
             aria-label="Toggle dark mode"
           >
             {theme === "light" ? <Moon className="w-4 h-4 text-indigo-600" /> : <Sun className="w-4 h-4 text-amber-400" />}

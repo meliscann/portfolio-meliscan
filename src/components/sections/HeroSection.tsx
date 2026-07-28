@@ -127,8 +127,8 @@ export const HeroSection: React.FC = () => {
                   className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full mt-2 w-full sm:w-52 z-50 rounded-2xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 shadow-2xl p-2 backdrop-blur-xl space-y-1"
                 >
                   <a
-                    href="/cv-en.pdf"
-                    download="Melis_Can_CV_EN.pdf"
+                    href="/MelisCan-CV-ENG.pdf"
+                    download="MelisCan-CV-ENG.pdf"
                     onClick={() => setCvMenuOpen(false)}
                     className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-stone-800 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 hover:text-emerald-700 dark:hover:text-pastel-mint transition"
                   >
@@ -142,8 +142,8 @@ export const HeroSection: React.FC = () => {
                   </a>
 
                   <a
-                    href="/cv-tr.pdf"
-                    download="Melis_Can_CV_TR.pdf"
+                    href="/MelisCan-CV-TR.pdf"
+                    download="MelisCan-CV-TR.pdf"
                     onClick={() => setCvMenuOpen(false)}
                     className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-stone-800 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800 hover:text-emerald-700 dark:hover:text-pastel-mint transition"
                   >
