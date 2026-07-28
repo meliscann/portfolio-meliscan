@@ -549,21 +549,32 @@ export const ProjectsSection: React.FC = () => {
                       {language === "tr" ? "Proje Slayt Sunumu (PDF)" : "Project Presentation Slides (PDF)"}
                     </h4>
 
-                    <a
-                      href={selectedProject.presentationPdfUrl}
-                      download="BuildingPath_Presentation_Slides.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-50 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-slate-700 text-xs font-semibold hover:bg-purple-100 transition shadow-sm"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      <span>{language === "tr" ? "Slaytları İndir (PDF)" : "Download Slides (PDF)"}</span>
-                    </a>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={selectedProject.presentationPdfUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-500/10 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 text-xs font-semibold hover:bg-purple-500/20 transition shadow-sm"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>{language === "tr" ? "Yeni Sekmede Aç" : "Open in New Tab"}</span>
+                      </a>
+                      <a
+                        href={selectedProject.presentationPdfUrl}
+                        download="BuildingPath_Presentation_Slides.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-50 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-slate-700 text-xs font-semibold hover:bg-purple-100 transition shadow-sm"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        <span>{language === "tr" ? "Slaytları İndir (PDF)" : "Download Slides (PDF)"}</span>
+                      </a>
+                    </div>
                   </div>
 
-                  <div className="relative w-full h-[60vh] rounded-2xl overflow-hidden bg-slate-950 border border-stone-800 shadow-xl">
+                  <div className="relative w-full h-[65vh] rounded-2xl overflow-hidden bg-slate-950 border border-stone-800 shadow-xl">
                     <iframe
-                      src={`${selectedProject.presentationPdfUrl}#toolbar=0&navpanes=0`}
+                      src={`${selectedProject.presentationPdfUrl}#view=FitH`}
                       className="w-full h-full border-0"
                       title={`${selectedProject.title[language]} presentation slides`}
                     />
