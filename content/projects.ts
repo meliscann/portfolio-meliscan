@@ -40,6 +40,7 @@ export interface Project {
   posterImageUrl?: string; // Optional poster image path
   videoUrl?: string; // Optional video path (.mp4) or video URL
   posterPdfUrl?: string; // Optional PDF poster path
+  presentationPdfUrl?: string; // Optional PDF presentation slide deck path
 }
 
 export const projectsData: Project[] = [
@@ -63,8 +64,8 @@ Through this project, I learned how to distinguish between the components of AI 
 
 Arka Plan: Kullanıcılar, bina içinde GPS'e erişemiyorlar ve hedeflerini genellikle koordinat değil, kelimelerle tarif ediyorlar.
 Amaç: Kullanıcının hedefini İngilizce veya Türkçe yazmasıyla katlar arası optimal, gerçek dünya verilerine göre kalibre edilmiş bir rota sunmak.
-Araçlar: Birbirine karşı test ettiğim 7 farklı yol bulma algoritması için Python, gerçek yürüme hızı ve fiziksel efor verilerine dayanan özel bir maliyet modeli, ve doğal dil anlama için (Groq üzerinden) bir LLM. LLM'i güvenilirlik için tüm rota kararlarından bilinçli olarak ayrı tuttum.
-Bulgular: A*, optimal rotayı garanti ederken arama süresini temel yönteme göre 3,8 kata kadar kısalttı. Erişilebilirlik profil sistemi ise sıfır sabit kodlanmış kuralla mantıklı merdiven-asansör seçimleri yaptı.
+Araçlar: Birbirine karşı test ettiğim 7 farklı yol bulma algoritması için Python, gerçek yürüme hızı ve fiziksel efor verilerine dayanan özel bir maliyet modeli, ve doğal dil anlama için (Groq üzerinden) bir LLM. Güvenilirlik için bilinçli olarak, LLM'i tüm rota kararlarından ayrı tuttum.
+Bulgular: A*, optimal rotayı garanti ederken arama süresini temel yönteme göre 3,8 kata kadar kısalttı. Erişilebilirlik profil sistemi ise herhangi bir sabit kural olmadan mantıklı merdiven-asansör seçimleri yaptı.
 Bu çalışmam sayesinde yapay zeka projelerinde, problemin dil modeline bırakılacak kısımları ile deterministik tutulması gereken kısımlarının ayrımını yapmayı öğrendim.`,
     },
     fullDescription: {

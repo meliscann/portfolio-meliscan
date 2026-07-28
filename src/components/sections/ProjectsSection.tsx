@@ -24,6 +24,7 @@ import {
   FileText,
   Download,
   Images,
+  Presentation,
 } from "lucide-react";
 
 // Bullet-point renderer with bold title headers and bold highlighted sentences
@@ -492,7 +493,7 @@ export const ProjectsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Interactive Project Technical Overview Modal with Video Player / PDF Poster & Photo Gallery */}
+      {/* Interactive Project Technical Overview Modal with Video Player / PDF Presentation / Poster & Photo Gallery */}
       <AnimatePresence>
         {selectedProject && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 backdrop-blur-md">
@@ -535,6 +536,37 @@ export const ProjectsSection: React.FC = () => {
                       <source src={selectedProject.videoUrl} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
+                  </div>
+                </div>
+              )}
+
+              {/* Optional Project Presentation Slides PDF */}
+              {selectedProject.presentationPdfUrl && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400 flex items-center gap-1.5">
+                      <Presentation className="w-4 h-4 text-purple-500" />
+                      {language === "tr" ? "Proje Slayt Sunumu (PDF)" : "Project Presentation Slides (PDF)"}
+                    </h4>
+
+                    <a
+                      href={selectedProject.presentationPdfUrl}
+                      download="BuildingPath_Presentation_Slides.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-50 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-slate-700 text-xs font-semibold hover:bg-purple-100 transition shadow-sm"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>{language === "tr" ? "Slaytları İndir (PDF)" : "Download Slides (PDF)"}</span>
+                    </a>
+                  </div>
+
+                  <div className="relative w-full h-[60vh] rounded-2xl overflow-hidden bg-slate-950 border border-stone-800 shadow-xl">
+                    <iframe
+                      src={`${selectedProject.presentationPdfUrl}#toolbar=0&navpanes=0`}
+                      className="w-full h-full border-0"
+                      title={`${selectedProject.title[language]} presentation slides`}
+                    />
                   </div>
                 </div>
               )}
