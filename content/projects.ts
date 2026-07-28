@@ -41,6 +41,7 @@ export interface Project {
   videoUrl?: string; // Optional video path (.mp4) or video URL
   posterPdfUrl?: string; // Optional PDF poster path
   presentationPdfUrl?: string; // Optional PDF presentation slide deck path
+  slidesImages?: string[]; // Optional array of slide images for presentation deck
 }
 
 export const projectsData: Project[] = [
@@ -180,6 +181,26 @@ En büyük ders mimariyle ilgiliydi. LLM'i karar verme sürecinden (rota belirle
     iconName: "Navigation",
     images: [],
     videoUrl: "/projects/buildingpath-demo.mp4",
+    presentationPdfUrl: "/projects/buildingpath-slides.pdf",
+    slidesImages: [
+      "/projects/slides/slide-1.jpg",
+      "/projects/slides/slide-2.jpg",
+      "/projects/slides/slide-3.jpg",
+      "/projects/slides/slide-4.jpg",
+      "/projects/slides/slide-5.jpg",
+      "/projects/slides/slide-6.jpg",
+      "/projects/slides/slide-7.jpg",
+      "/projects/slides/slide-8.jpg",
+      "/projects/slides/slide-9.jpg",
+      "/projects/slides/slide-10.jpg",
+      "/projects/slides/slide-11.jpg",
+      "/projects/slides/slide-12.jpg",
+      "/projects/slides/slide-13.jpg",
+      "/projects/slides/slide-14.jpg",
+      "/projects/slides/slide-15.jpg",
+      "/projects/slides/slide-16.jpg",
+      "/projects/slides/slide-17.jpg",
+    ],
   },
 
   // 2. Explainable Weak Password Detection

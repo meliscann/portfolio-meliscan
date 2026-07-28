@@ -294,6 +294,7 @@ export const ProjectsSection: React.FC = () => {
   const [direction, setDirection] = useState<"left" | "right">("right");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIdx, setCurrentImageIdx] = useState<number>(0);
+  const [currentSlideIdx, setCurrentSlideIdx] = useState<number>(0);
 
   const totalProjects = projectsData.length;
   const project = projectsData[currentIndex];
@@ -341,6 +342,7 @@ export const ProjectsSection: React.FC = () => {
   const handleOpenModal = (p: Project) => {
     setSelectedProject(p);
     setCurrentImageIdx(0);
+    setCurrentSlideIdx(0);
   };
 
   const slideVariants = {
@@ -493,7 +495,7 @@ export const ProjectsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Interactive Project Technical Overview Modal with Video Player / PDF Presentation / Poster & Photo Gallery */}
+      {/* Interactive Project Technical Overview Modal with Video Player / Slide Deck / Poster & Photo Gallery */}
       <AnimatePresence>
         {selectedProject && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 backdrop-blur-md">
@@ -540,44 +542,68 @@ export const ProjectsSection: React.FC = () => {
                 </div>
               )}
 
-              {/* Optional Project Presentation Slides PDF */}
-              {selectedProject.presentationPdfUrl && (
-                <div className="space-y-3">
+              {/* Interactive Presentation Slide Deck Carousel */}
+              {selectedProject.slidesImages && selectedProject.slidesImages.length > 0 && (
+                <div className="space-y-3 pt-2">
                   <div className="flex items-center justify-between">
                     <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400 flex items-center gap-1.5">
                       <Presentation className="w-4 h-4 text-purple-500" />
-                      {language === "tr" ? "Proje Slayt Sunumu (PDF)" : "Project Presentation Slides (PDF)"}
+                      {language === "tr" ? "Proje Slayt Sunumu" : "Project Presentation Slides"}
                     </h4>
 
                     <div className="flex items-center gap-2">
-                      <a
-                        href={selectedProject.presentationPdfUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-500/10 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 text-xs font-semibold hover:bg-purple-500/20 transition shadow-sm"
-                      >
-                        <ExternalLink className="w-3.5 h-3.5" />
-                        <span>{language === "tr" ? "Yeni Sekmede Aç" : "Open in New Tab"}</span>
-                      </a>
-                      <a
-                        href={selectedProject.presentationPdfUrl}
-                        download="BuildingPath_Presentation_Slides.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-50 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-slate-700 text-xs font-semibold hover:bg-purple-100 transition shadow-sm"
-                      >
-                        <Download className="w-3.5 h-3.5" />
-                        <span>{language === "tr" ? "Slaytları İndir (PDF)" : "Download Slides (PDF)"}</span>
-                      </a>
+                      <span className="font-mono text-xs font-semibold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-slate-800 border border-purple-200 dark:border-slate-700 px-3 py-1 rounded-full">
+                        {language === "tr" ? "Slayt" : "Slide"} {currentSlideIdx + 1} / {selectedProject.slidesImages.length}
+                      </span>
+
+                      {selectedProject.presentationPdfUrl && (
+                        <a
+                          href={selectedProject.presentationPdfUrl}
+                          download="BuildingPath_Presentation_Slides.pdf"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold transition shadow-sm"
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                          <span>{language === "tr" ? "PDF İndir" : "Download PDF"}</span>
+                        </a>
+                      )}
                     </div>
                   </div>
 
-                  <div className="relative w-full h-[65vh] rounded-2xl overflow-hidden bg-slate-950 border border-stone-800 shadow-xl">
-                    <iframe
-                      src={`${selectedProject.presentationPdfUrl}#view=FitH`}
-                      className="w-full h-full border-0"
-                      title={`${selectedProject.title[language]} presentation slides`}
+                  {/* Interactive Slide Viewer Container */}
+                  <div className="relative w-full rounded-2xl overflow-hidden bg-slate-950 border border-stone-800/80 group shadow-2xl flex items-center justify-center p-2 sm:p-4">
+                    <img
+                      src={selectedProject.slidesImages[currentSlideIdx]}
+                      alt={`Presentation slide ${currentSlideIdx + 1}`}
+                      className="w-full max-w-4xl h-auto max-h-[75vh] object-contain mx-auto rounded-xl shadow-lg"
                     />
+
+                    {/* Prev / Next Slider Controls */}
+                    {selectedProject.slidesImages.length > 1 && (
+                      <>
+                        <button
+                          onClick={() =>
+                            setCurrentSlideIdx(
+                              (prev) => (prev - 1 + selectedProject.slidesImages!.length) % selectedProject.slidesImages!.length
+                            )
+                          }
+                          className="absolute left-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-900/85 text-white hover:bg-slate-900 transition backdrop-blur-md shadow-xl hover:scale-110"
+                          aria-label="Previous slide"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() =>
+                            setCurrentSlideIdx((prev) => (prev + 1) % selectedProject.slidesImages!.length)
+                          }
+                          className="absolute right-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-900/85 text-white hover:bg-slate-900 transition backdrop-blur-md shadow-xl hover:scale-110"
+                          aria-label="Next slide"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               )}
