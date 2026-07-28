@@ -24,8 +24,8 @@ export const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[70vh] flex items-center justify-center pt-28 pb-24 px-4 sm:px-6 z-10">
-      <div className="max-w-5xl mx-auto text-center space-y-8 z-10">
+    <section className="relative min-h-[50vh] flex items-center justify-center pt-24 pb-6 px-4 sm:px-6 z-10">
+      <div className="max-w-5xl mx-auto text-center space-y-6 z-10">
 
         {/* Main Name & Title (Hi! I'm Melis) */}
         <motion.div
@@ -63,23 +63,6 @@ export const HeroSection: React.FC = () => {
           {profileData.headline[language]}
         </motion.p>
 
-        {/* Specialization Tags / Tech Pills */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap items-center justify-center gap-2.5 max-w-2xl mx-auto"
-        >
-          <Badge variant="lavender" size="md">
-            <Bot className="w-4 h-4 text-indigo-600" /> Multi-Agent Systems
-          </Badge>
-          <Badge variant="mint" size="md">
-            <Cpu className="w-4 h-4 text-emerald-600" /> RAG Architectures
-          </Badge>
-          <Badge variant="peach" size="md">
-            <Search className="w-4 h-4 text-amber-600" /> Explainable AI (XAI)
-          </Badge>
-        </motion.div>
 
         {/* Action Call To Actions & Social Links */}
         <motion.div

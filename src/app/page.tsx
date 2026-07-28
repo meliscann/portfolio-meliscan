@@ -10,7 +10,7 @@ import { useLanguage } from "@/components/context/LanguageContext";
 import { ArrowRight, User, Briefcase, FolderKanban, Mail } from "lucide-react";
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
 
   return (
     <main className="relative min-h-screen flex flex-col justify-between bg-bg-light dark:bg-bg-dark text-slate-800 dark:text-slate-100 bg-grid-pattern transition-colors duration-300 overflow-hidden">
@@ -21,8 +21,8 @@ export default function Home() {
         {/* Hero Greeting Section */}
         <HeroSection />
 
-        {/* Quick Navigation Cards */}
-        <section className="relative z-10 py-12 px-4 sm:px-6 max-w-5xl mx-auto">
+        {/* Quick Navigation Cards (Moved higher up) */}
+        <section className="relative z-10 pt-0 pb-12 px-4 sm:px-6 max-w-5xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link
               href="/about"
@@ -36,11 +36,13 @@ export default function Home() {
                   {t.nav.about}
                 </h3>
                 <p className="text-xs text-stone-600 dark:text-slate-400">
-                  Academic degree & engineering journey.
+                  {language === "tr"
+                    ? "Akademik eğitim & mühendislik yolculuğu."
+                    : "Academic degree & engineering journey."}
                 </p>
               </div>
               <div className="pt-4 flex items-center text-xs font-semibold text-indigo-600 dark:text-pastel-lavender gap-1">
-                <span>Read About</span>
+                <span>{language === "tr" ? "İncele" : "Read About"}</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
@@ -57,11 +59,13 @@ export default function Home() {
                   {t.nav.experience}
                 </h3>
                 <p className="text-xs text-stone-600 dark:text-slate-400">
-                  Work experience & technical skills.
+                  {language === "tr"
+                    ? "İş tecrübeleri & teknik yetkinlikler."
+                    : "Work experience & technical skills."}
                 </p>
               </div>
               <div className="pt-4 flex items-center text-xs font-semibold text-emerald-600 dark:text-pastel-mint gap-1">
-                <span>View Track Record</span>
+                <span>{language === "tr" ? "İncele" : "View Track Record"}</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
@@ -78,11 +82,13 @@ export default function Home() {
                   {t.nav.projects}
                 </h3>
                 <p className="text-xs text-stone-600 dark:text-slate-400">
-                  8 featured AI/ML & multi-agent systems.
+                  {language === "tr"
+                    ? "geliştirdiğim projeler, çoğunlukla AI/ML, multi-agent sistemler."
+                    : "projects I built, mostly focused on AI/ML and multi-agent systems."}
                 </p>
               </div>
               <div className="pt-4 flex items-center text-xs font-semibold text-amber-600 dark:text-pastel-peach gap-1">
-                <span>Explore Projects</span>
+                <span>{language === "tr" ? "Keşfet" : "Explore Projects"}</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
@@ -99,11 +105,13 @@ export default function Home() {
                   {t.nav.contact}
                 </h3>
                 <p className="text-xs text-stone-600 dark:text-slate-400">
-                  Direct email & contact details.
+                  {language === "tr"
+                    ? "Doğrudan e-posta & iletişim bilgileri."
+                    : "Direct email & contact details."}
                 </p>
               </div>
               <div className="pt-4 flex items-center text-xs font-semibold text-sky-600 dark:text-pastel-sky gap-1">
-                <span>Get in Touch</span>
+                <span>{language === "tr" ? "İletişime Geç" : "Get in Touch"}</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
