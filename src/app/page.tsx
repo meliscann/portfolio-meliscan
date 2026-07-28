@@ -83,8 +83,8 @@ export default function Home() {
                 </h3>
                 <p className="text-xs text-stone-600 dark:text-slate-400">
                   {language === "tr"
-                    ? "geliştirdiğim projeler, çoğunlukla AI/ML, multi-agent sistemler."
-                    : "projects I built, mostly focused on AI/ML and multi-agent systems."}
+                    ? "Geliştirdiğim projeler, çoğunlukla AI/ML, multi-agent sistemler."
+                    : "Projects I built, mostly focused on AI/ML and multi-agent systems."}
                 </p>
               </div>
               <div className="pt-4 flex items-center text-xs font-semibold text-amber-600 dark:text-pastel-peach gap-1">
