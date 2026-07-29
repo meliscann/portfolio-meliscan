@@ -235,7 +235,7 @@ En büyük ders mimariyle ilgiliydi. LLM'i karar verme sürecinden (rota belirle
       en: ["85.3% Classification Accuracy", "0.93 ROC-AUC Score", "~50K Password Dataset Analyzed"],
       tr: ["%85.3 Sınıflandırma Doğruluğu", "0.93 ROC-AUC Skoru", "~50 Bini Aşkın Şifre Veriset"],
     },
-    //githubUrl: "https://github.com/meliscann/Password-XAI-Research",
+    githubUrl: "https://github.com/meliscann/weak-password-detection",
     iconName: "ShieldAlert",
     posterImageUrl: "/projects/MelisCan-Workshop-Poster.png",
     posterPdfUrl: "/projects/MelisCan-Workshop-Poster.pdf",
