@@ -42,6 +42,7 @@ export interface Project {
   posterPdfUrl?: string; // Optional PDF poster path
   presentationPdfUrl?: string; // Optional PDF presentation slide deck path
   slidesImages?: string[]; // Optional array of slide images for presentation deck
+  actionButtonText?: { en: string; tr: string }; // Optional custom button text per project
 }
 
 export const projectsData: Project[] = [

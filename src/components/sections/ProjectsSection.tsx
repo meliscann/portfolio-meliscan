@@ -457,7 +457,11 @@ export const ProjectsSection: React.FC = () => {
                     onClick={() => handleOpenModal(project)}
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-900 text-xs sm:text-sm font-semibold shadow-lg hover:shadow-pastel-glow transition-all duration-300 group"
                   >
-                    <span>{t.projects.viewDetails}</span>
+                    <span>
+                      {project.actionButtonText
+                        ? project.actionButtonText[language]
+                        : t.projects.viewDetails}
+                    </span>
                     <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
 

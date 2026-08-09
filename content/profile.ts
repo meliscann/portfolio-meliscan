@@ -139,8 +139,8 @@ export const profileData: ProfileData = {
           date: "07/2024 – 08/2024",
           location: "Denizli, Türkiye",
           highlights: [
-            "Designed and executed complex SQL queries for data extraction & transformation to build executive reporting workflows.",
-            "Analyzed operational datasets to identify efficiency bottlenecks, contributing to strategic planning decisions.",
+            "Practiced database design and querying in PostgreSQL to enhance data analysis capabilities: Worked on database fundamentals—including normalization, functional dependency, and schema design—alongside hands-on experience with DDL, DCL, and TCL commands, as well as complex multi-table queries (SELECT, WHERE, GROUP BY, ORDER BY, and mathematical functions).",
+            "Observed software and AI project planning for electricity distribution customers: Attended IT team meetings discussing active projects, gaining firsthand insight into project management and planning processes.",
           ],
         },
       ],
@@ -216,8 +216,8 @@ export const profileData: ProfileData = {
           date: "07/2024 – 08/2024",
           location: "Denizli, Türkiye",
           highlights: [
-            "Yönetim raporlama süreçlerini desteklemek amacıyla veri çıkarma ve dönüştürme SQL sorguları tasarladı.",
-            "Operasyonel verisetlerini analiz ederek sistem optimizasyonu ve stratejik kararlara katkı sağladı.",
+            "Veri analizi yetkinliğimi geliştirmek adına PostgreSQL üzerinde veritabanı tasarımı ve sorgulama pratiği yaptım: normalizasyon, işlevsel bağımlılık ve şema tasarımı gibi veritabanı temellerinin yanı sıra DDL, DCL, TCL komutları ve çoklu tablo sorgulamaları (SELECT, WHERE, GROUP BY, ORDER BY, matematikselfonksiyonlar) üzerinde çalıştım",
+            "BT ekibinin güncel projelerinin konuşulduğu toplantılara katılarak, elektrik dağıtım müşterilerine yönelik yazılım ve yapay zeka projelerinin planlama sürecini gözlemleme fırsatı buldum.",
           ],
         },
       ],
